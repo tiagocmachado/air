@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Homepage</title>
+</head>
+<body>
+<input id="inp1" placeholder="video source one"
+       value="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4"/>
+<input id="inp2" placeholder="video source two"
+       value="https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_480_1_5MG.mp4"/>
+<button onclick="submit()">Concatenate Videos</button>
+<div id="output"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+    const submit = () => {
+        console.log('submit')
+        const video1 = document.getElementById("inp1").value;
+        const video2 = document.getElementById("inp2").value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/merge', true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                const link = JSON.parse(xhr.response).output;
+                document.getElementById('output').innerHTML = '<button onclick="downloadVideo()">Download Video</button>';
+            }
+        }
+
+        xhr.send(`video1=${video1}&video2=${video2}`);
+    }
+
+    const downloadVideo = () => {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function () {
+            const fileName = "output.mp4";
+            const objectURL = URL.createObjectURL(xhr.response);
+            const a = document.createElement('a');
+            a.href = objectURL;
+            a.setAttribute('download', fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+
+        xhr.open('GET', '/download');
+        xhr.send();
+    }
+
+</script>

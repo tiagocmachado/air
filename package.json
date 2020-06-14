@@ -1,0 +1,29 @@
+{
+  "name": "air",
+  "version": "1.0.0",
+  "description": "air concatenate videos",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node index",
+    "serve": "nodemon index",
+    "test": "echo \\\"Error: no temp specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagocmachado/air.git"
+  },
+  "author": "Tiago Machado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiagocmachado/air/issues"
+  },
+  "homepage": "https://github.com/tiagocmachado/air#readme"
+}
